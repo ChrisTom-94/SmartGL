@@ -1,3 +1,5 @@
+#include "precompiled.h"
+
 #include "Core/Random.h"
 
 #include <stdlib.h>

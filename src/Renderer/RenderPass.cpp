@@ -3,8 +3,6 @@
 #include "Renderer/RenderPass.h"
 #include "Renderer/RenderCommand.h"
 
-#include "Core/Log.h"
-
 namespace SmartGL
 {
     RenderPass::RenderPass(RenderPassSpecifications spec)
@@ -57,9 +55,7 @@ namespace SmartGL
 
     void RenderPass::BindShader()
     {
-        if(m_Specifications.Program == nullptr)
-            SMART_LOG_WARN("RenderPass::BindShader: No shader program set for this render pass");
-        else
-            m_Specifications.Program->Bind();
+        SMART_ASSERT(m_Specifications.Program != nullptr, "RenderPass::BindShader: No shader program set for this render pass");
+        m_Specifications.Program->Bind();
     }
 }

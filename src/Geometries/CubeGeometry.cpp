@@ -4,8 +4,6 @@
 
 #include "Geometries/PlaneGeometry.h"
 
-#include "Core/Log.h"
-
 namespace SmartGL
 {
 

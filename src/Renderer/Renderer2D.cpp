@@ -4,6 +4,7 @@
 #include "Renderer/RenderCommand.h"
 #include "Renderer/Texture.h"
 #include "Renderer/UniformBuffer.h"
+#include "Renderer/ShaderLibrary.h"
 
 #include "Core/Log.h"
 
@@ -197,16 +198,26 @@ namespace SmartGL
 
         s_Data.TextureSlots[0] = s_Data.WhiteTexture;
 
-#if defined(SMART_PLATFORM_LINUX) || defined(SMART_COMPILER_MINGW)
-        std::string shaderPath = "SmartGL/assets/shaders/renderer2d/";
-#else
-        std::string shaderPath = "../SmartGL/assets/shaders/renderer2d/";
-#endif
+// #if defined(SMART_PLATFORM_LINUX) || defined(SMART_COMPILER_MINGW)
+//         std::string shaderPath = "assets/shaders/renderer2d/";
+// #else
+//         std::string shaderPath = "../assets/shaders/renderer2d/";
+// #endif
 
-        s_Data.QuadShader = CreateShared<Shader>("Quad", shaderPath + "quad.glsl");
-        s_Data.CircleShader = CreateShared<Shader>("Circle", shaderPath + "circle.glsl");
-        s_Data.LineShader = CreateShared<Shader>("Line", shaderPath + "line.glsl");
-        s_Data.PointShader = CreateShared<Shader>("Point", shaderPath + "point.glsl");
+//         s_Data.QuadShader = CreateShared<Shader>("Quad", shaderPath + "quad.glsl");
+//         s_Data.CircleShader = CreateShared<Shader>("Circle", shaderPath + "circle.glsl");
+//         s_Data.LineShader = CreateShared<Shader>("Line", shaderPath + "line.glsl");
+//         s_Data.PointShader = CreateShared<Shader>("Point", shaderPath + "point.glsl");
+
+        ShaderLibrary::Load("Quad", "assets/shaders/renderer2d/quad.glsl");
+        ShaderLibrary::Load("Circle", "assets/shaders/renderer2d/circle.glsl");
+        ShaderLibrary::Load("Line", "assets/shaders/renderer2d/line.glsl");
+        ShaderLibrary::Load("Point", "assets/shaders/renderer2d/point.glsl");
+
+        s_Data.QuadShader = ShaderLibrary::Get("Quad");
+        s_Data.CircleShader = ShaderLibrary::Get("Circle");
+        s_Data.LineShader = ShaderLibrary::Get("Line");
+        s_Data.PointShader = ShaderLibrary::Get("Point");
 
         s_Data.QuadVertexPositions[0] = {-0.5f, -0.5f, 0.0f, 1.0f};
         s_Data.QuadVertexPositions[1] = {0.5f, -0.5f, 0.0f, 1.0f};

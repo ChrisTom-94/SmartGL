@@ -10,5 +10,9 @@ int main(int argc, char **argv)
 
     auto app = SmartGL::Core::CreateApplication();
     app->Run();
+
+    SMART_LOG_TRACE("Shutting down...");
+    SmartGL::Core::Logger::Shutdown();
+
     delete app;
 }

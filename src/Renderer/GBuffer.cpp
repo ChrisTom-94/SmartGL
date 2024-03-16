@@ -2,8 +2,6 @@
 
 #include "Renderer/GBuffer.h"
 
-#include "Core/Log.h"
-
 namespace SmartGL
 {
     GBuffer::GBuffer()

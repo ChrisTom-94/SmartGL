@@ -44,13 +44,10 @@ namespace SmartGL
         if (fileFormat == "glsl")
             return ParseGLSL(filepath);
 
-        std::string cwd = std::filesystem::current_path().string();
-        std::string filepathWithCwd = cwd + "/" + filepath;
-
         std::stringstream ss[2];
         for (int i = 0; i < 2; i++)
         {
-            std::ifstream stream(filepathWithCwd + (i == 0 ? ".vert" : ".frag"));
+            std::ifstream stream(filepath + (i == 0 ? ".vert" : ".frag"));
 
             SMART_ASSERT(stream.is_open(), "Failed to open shader file!");
 
@@ -91,11 +88,8 @@ namespace SmartGL
 
     ShaderSources Shader::ParseGLSL(const std::string &filepath)
     {
-        std::string cwd = std::filesystem::current_path().string();
-        std::string filepathWithCwd = cwd + "/" + filepath;
-
         ShaderSources shaderSources;
-        std::string source = ReadFile(filepathWithCwd);
+        std::string source = ReadFile(filepath);
 
         const char *typeToken = "#type";
         size_t typeTokenLength = strlen(typeToken);

@@ -5,6 +5,8 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include "glm/gtx/string_cast.hpp"
 
+
+#define SPDLOG_COMPILED_LIB
 #pragma warning(push, 0)
 #include "spdlog/spdlog.h"
 #include "spdlog/fmt/ostr.h"
@@ -18,6 +20,7 @@ namespace SmartGL
         {
         public:
             static void Init();
+            static void Shutdown();
 
             inline static Shared<spdlog::logger> &Get() { return s_Logger; }
 

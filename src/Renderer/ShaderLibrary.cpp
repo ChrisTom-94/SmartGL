@@ -10,7 +10,9 @@ namespace SmartGL
 
     void ShaderLibrary::Load(const std::string &name, const std::string &filepath)
     {
-        Shared<Shader> shader = CreateShared<Shader>(name, filepath);
+        std::string file = FindShaderFile(filepath);
+
+        Shared<Shader> shader = CreateShared<Shader>(name, file);
         m_Shaders[name] = shader;
 
     }
@@ -27,25 +29,22 @@ namespace SmartGL
         return m_Shaders[name];
     }
 
-    std::string ShaderLibrary::FindShaderFile(const std::string &filename)
+    std::string ShaderLibrary::FindShaderFile(const std::string &filepath)
     {
-        std::string currentDir = Core::Application::Get().GetSpecification().WorkingDirectory;
+        std::string appDirectory = Core::Application::Get().GetSpecification().WorkingDirectory;
+        std::string shaderfile = appDirectory + "/" + filepath;
 
-        #if defined(SMART_PLATFORM_LINUX) || defined(SMART_COMPILER_MINGW)
-        currentDir += "/";
-#else
-        currentDir += "../";
-#endif
+        if(std::filesystem::exists(shaderfile))
+            return shaderfile;
 
-        std::string filepath = currentDir + "assets/shaders/" + filename;
+        char *env = std::getenv("SMARTGL_DIR");
+        SMART_ASSERT(env != nullptr);
 
-        if(std::filesystem::exists(filepath))
-            return filepath;
+        std::string root = env;
+        shaderfile = root + "/" + filepath;
 
-        std::string filePathSmartGL = currentDir + "../SmartGL/assets/shaders/" + filename;
+        SMART_ASSERT(std::filesystem::exists(shaderfile), "Shader file not found!");
 
-        SMART_ASSERT(std::filesystem::exists(filePathSmartGL), "Shader file not found!");
-
-        return filePathSmartGL;
+        return shaderfile;
     }
 }

@@ -16,11 +16,11 @@ namespace SmartGL
 			std::vector<spdlog::sink_ptr> logSinks;
 			logSinks.emplace_back(std::make_shared<spdlog::sinks::stdout_color_sink_mt>());
 
-#if defined(SMART_COMPILER_MINGW) || defined(SMART_PLATFORM_LINUX)
-			std::string path = "SmartGL/SmartGL.log";
-#else 
-			std::string path = "../SmartGL/SmartGL.log";
-#endif
+			#if defined(SMART_COMPILER_MINGW) || defined(SMART_PLATFORM_LINUX)
+						std::string path = "SmartGL/SmartGL.log";
+			#else
+						std::string path = "../SmartGL/SmartGL.log";
+			#endif
 
 			logSinks.emplace_back(std::make_shared<spdlog::sinks::basic_file_sink_mt>(path.c_str(), true));
 
@@ -31,6 +31,12 @@ namespace SmartGL
 			spdlog::register_logger(s_Logger);
 			s_Logger->set_level(spdlog::level::trace);
 			s_Logger->flush_on(spdlog::level::trace);
+		}
+
+		void Logger::Shutdown()
+		{
+			s_Logger.reset();
+			spdlog::drop_all();
 		}
 	}
 }

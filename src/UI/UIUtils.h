@@ -1,6 +1,7 @@
 #pragma once
 
 #include "imgui/imgui.h"
+#include <functional>
 
 namespace SmartGL
 {
@@ -41,6 +42,13 @@ namespace SmartGL
             }
 
             ImGui::PopStyleColor();
+        }
+
+        static void AddWindow(const char *name)
+        {
+            ImGui::Begin(name);
+            ImGui::Text("Hello, world!");
+            ImGui::End();
         }
     }
 }

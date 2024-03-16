@@ -1,3 +1,25 @@
+include "dependencies.lua"
+
+workspace "SmartGL Engine"
+    architecture "x64"
+    platforms {"x64", "x86"}
+    flags {"MultiProcessorCompile"}
+    configurations
+    {
+        "Debug",
+        "Release",
+        "Dist"
+    }
+
+    outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+
+    group "Dependencies"
+        include "includes/glfw"
+        include "includes/glad"
+        include "includes/imgui"
+        include "includes/spdlog"
+    group ""
+
 project 'SmartGL'
     kind 'StaticLib'
     language 'C++'
@@ -6,7 +28,6 @@ project 'SmartGL'
     systemversion 'latest'
 
     pchsource "src/precompiled.cpp"
-    pchheader "precompiled.h"
 
     files
     {
@@ -39,28 +60,27 @@ project 'SmartGL'
     defines
     {
         'GLFW_INCLUDE_NONE',
-        '_CRT_SECURE_NO_WARNINGS'
+        '_CRT_SECURE_NO_WARNINGS',
     }
-
 
     filter {"action:vs*", "system:windows"}
         pchheader "precompiled.h"
         targetdir ("%{wks.location}/build/bin/windows/vs/" .. outputdir .. "/%{prj.name}")
         objdir ("%{wks.location}/build/bin-int/windows/vs/" .. outputdir .. "/%{prj.name}")
-        links { 'glad', 'glfw', 'imgui', 'opengl32', 'gdi32', 'user32', 'shell32' }
+        links { 'spdlog', 'glad', 'glfw', 'imgui', 'opengl32', 'gdi32', 'user32', 'shell32' }
         defines 'SMART_PLATFORM_WINDOWS'
 
     filter {"action:gmake*", "system:windows"}
         pchheader "precompiled.h"
         targetdir ("%{wks.location}/build/bin/windows/mingw/" .. outputdir .. "/%{prj.name}")
         objdir ("%{wks.location}/build/bin-int/windows/mingw/" .. outputdir .. "/%{prj.name}")
-        links { 'glad', 'glfw', 'imgui', 'opengl32', 'gdi32', 'user32', 'shell32' }
+        links { 'spdlog', 'glad', 'glfw', 'imgui', 'opengl32', 'gdi32', 'user32', 'shell32' }
         defines {'SMART_PLATFORM_WINDOWS', 'SMART_COMPILER_MINGW'}
 
     filter "system:linux"
         targetdir ("%{wks.location}/build/bin/linux/" .. outputdir .. "/%{prj.name}")
         objdir ("%{wks.location}/build/bin-int/linux/" .. outputdir .. "/%{prj.name}")
-        links {'glad', 'glfw', 'imgui', 'dl', 'GL', 'pthread', 'X11', 'Xrandr', 'Xi', 'Xxf86vm', 'Xinerama', 'Xcursor' }
+        links {'spdlog', 'glad', 'glfw', 'imgui', 'dl', 'GL', 'pthread', 'X11', 'Xrandr', 'Xi', 'Xxf86vm', 'Xinerama', 'Xcursor' }
         defines 'SMART_PLATFORM_LINUX'
 
 
