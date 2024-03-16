@@ -6,25 +6,16 @@ namespace SmartGL
 {
     namespace Maths
     {
-
-        static float Lerp(float a, float b, float t)
+        template<typename T>
+        static T Lerp(const T &a, const T &b, float t)
         {
             return a + t * (b - a);
-        };
+        }
 
-        static glm::vec2 Lerp(const glm::vec2 &a, const glm::vec2 &b, float t)
+        template<typename T>
+        static T InversedLerp(const T &a, const T &b, const T &value)
         {
-            return a + t * (b - a);
-        };
-
-        static glm::vec3 Lerp(const glm::vec3 &a, const glm::vec3 &b, float t)
-        {
-            return a + t * (b - a);
-        };
-
-        static glm::vec4 Lerp(const glm::vec4 &a, const glm::vec4 &b, float t)
-        {
-            return a + t * (b - a);
-        };
+            return (value - a) / (b - a);
+        }
     }
 }

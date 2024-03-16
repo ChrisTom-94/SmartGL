@@ -4,7 +4,8 @@ namespace SmartGL
 {
     namespace Maths
     {
-        static float Clamp(float value, float min, float max)
+        template<typename T>
+        static T Clamp(const T &value, const T &min, const T &max)
         {
             return value < min ? min : (value > max ? max : value);
         }

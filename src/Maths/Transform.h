@@ -3,6 +3,8 @@
 #include "glm/gtx/quaternion.hpp"
 #include "glm/gtx/matrix_decompose.hpp"
 
+#include "Core/TypesDefinitions.h"
+
 namespace SmartGL
 {
     namespace Maths
